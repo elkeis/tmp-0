@@ -1,0 +1,179 @@
+@keyframes flying {
+  from {
+    transform: translate3d(0, 0, 0);
+  } to {
+    transform: translate3d(0, 6px, 0px);
+  }
+}
+
+@keyframes flying-slightly {
+  from {
+    transform: translate3d(0, 0, 0);
+  } to {
+    transform: translate3d(0, -3px, 0px);
+  }
+}
+
+
+// MATERIALS
+.with-material {
+
+  &.night {
+    background: #b5d1ff;
+    background: linear-gradient(#29133a, #2e89a6);
+  }
+
+  &.sunset {
+    background: linear-gradient(#ffcc65, #ff6262);
+  }
+
+  &.glass {
+    background: rgba(20, 74, 104, 0.19);
+    &._green {
+      background: rgba(127, 165, 122, 0.29);
+    }
+  }
+}
+
+//EFFECTS
+.with-effect {
+
+  &.light {
+    box-shadow: rgba(31, 171, 209, 0.76) 0px 0px 200px, rgba(255, 255, 255, 0.9) 0px 0px 50px;
+  }
+
+  &.comics-outline {
+    border: 1px solid rgb(6, 22, 31);
+  }
+
+  &.view-angle {
+    transform: rotate3d(.4, .2, .0, 5deg);
+  }
+
+  &.flying {
+    animation: flying 3s  ease-in-out infinite alternate;
+  }
+
+  &.flying-slightly {
+    animation: flying-slightly 3s ease-in-out infinite alternate;
+  }
+}
+
+// STRUCTURE
+.with-structure {
+
+  &.stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: stretch;
+
+    padding: 10px;
+    > * {
+      margin-bottom: 10px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &.shelf {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+
+    > * {
+      margin-right: 10px;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+
+    &._cosmic {
+      padding: 0 10px;
+      & > * {
+        margin-top: -10px;
+        margin-bottom: -10px;
+      }
+
+    }
+  }
+
+  &.padded-box {
+    padding: 10px;
+  }
+
+  &.zero-gravity {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &.no-overflow {
+    overflow: hidden;
+  }
+}
+
+// GEOMETRY
+
+.with-geometry {
+
+  &.fill-parent {
+
+    width: 100%;
+    height: 100%;
+  }
+
+  &.box-500x700 {
+    height: 500px;
+    width: 700px;
+  }
+}
+
+// CLASSES
+.world {
+  position: absolute;
+  color: #fefff9;
+}
+
+.camera {
+  perspective: 800px;
+}
+
+
+.button {
+  // STRUCTURE
+  margin-right: 10px;
+  padding: 0px 25px 5px 25px;
+
+  // BEHAVIOR
+  transition: transform .1s;
+  &:active {
+    transform:  translateY( -3px);
+  }
+
+  //CONTENT
+  &._ok {
+    letter-spacing: 0.1em;
+    &::after {
+      content: "ok";
+    }
+  }
+
+  &._cancel {
+    letter-spacing: 0.1em;
+    &::after {
+      content: "cancel";
+    }
+  }
+}
+
+
+.App {
+
+  div, button {
+    outline: none;
+    border: none;
+  }
+}
+
