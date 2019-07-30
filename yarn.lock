@@ -1405,6 +1405,28 @@
     scheduler "0.13.2"
     warning "^4.0.3"
 
+"@react-vertex/geometry-hooks@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@react-vertex/geometry-hooks/-/geometry-hooks-2.3.0.tgz#af5e02a797448ecc577a5b8899ca1dadfd9d8aee"
+  integrity sha512-+aCHzkvcbMvo5KJvzW7fBA0JqYmXvaI7I7UEwX4cpk/VKD6mIkIH+Ad+d3XZRNMa5/DEHVMN3AZAt3S7W5QaNw==
+  dependencies:
+    "@babel/runtime" "^7.4.3"
+
+"@react-vertex/material-hooks@^2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@react-vertex/material-hooks/-/material-hooks-2.5.0.tgz#03aadf76af3b0ecbed672f24460cb37d1d10a737"
+  integrity sha512-hFqwKnqXtAtGW31+h2GDVVU/81TK6UlPZsGyxnGfPJwo/h50uiirotAcGFbd7dPAA9IwjrhFyS9E1/11SYa0Cg==
+  dependencies:
+    "@babel/runtime" "^7.4.3"
+
+"@react-vertex/math-hooks@^1.9.0":
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/@react-vertex/math-hooks/-/math-hooks-1.9.0.tgz#4f242f9a4dd883f6e45f1389ef64623ddfc0a326"
+  integrity sha512-adxgHXbW7PDtlfzZP0MZ3QlymI1hnfX0iDdVtFYPZVGn2KakkyEVU1298+6U71Dv3VnYVfLkt9oqo9GvkDn1LA==
+  dependencies:
+    "@babel/runtime" "^7.4.3"
+    gl-matrix "^3.0.0"
+
 "@svgr/babel-plugin-add-jsx-attribute@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@svgr/babel-plugin-add-jsx-attribute/-/babel-plugin-add-jsx-attribute-4.0.0.tgz#5acf239cd2747b1a36ec7e708de05d914cb9b948"
