@@ -58,7 +58,7 @@
 }
 
 @mixin e-comics-outline {
-  border: .5px solid  rgb(6, 22, 31);
+  border: 1px solid  rgb(6, 22, 31);
 }
 @mixin e-view-angle {
   transform: rotate3d(.4, .2, .0, 5deg);
@@ -211,7 +211,6 @@
 }
 
 .screen {
-  // @include g-box(700px, 500px);
   @include s-shelf();
   @include m-sunset();
   @include e-light();
@@ -223,15 +222,14 @@
   @include s-stack();
   @include m-glass();
   @include e-comics-outline();
-  // @include e-view-angle();
-  // @include e-flying();
+  @include e-flying();
 }
 
 .controls-pane {
   @include s-stack();
   @include m-glass();
   @include e-comics-outline();
-  // @include e-flying-slightly();
+  @include e-flying-slightly();
 }
 
 

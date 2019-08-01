@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import {
     useInvertedMatrix,
     usePerspectiveMatrix,
@@ -9,11 +9,12 @@ import {
     usePointLight
 } from '@react-vertex/core';
 import Grid, {GridProperties} from './Grid';
-import Obstacle, { ObstacleRenderingProperties } from './Obstacle';
+import Obstacle, { ObstacleRenderingProperties } from './Obstacle/Obstacle';
 import { ObstacleType } from '../../reducer/models/ObstacleType';
 
 export type GameSceneState = {
     gridProperties: GridProperties,
+    light: LightProperties,
     obstacles: Array<ObstacleProperties>
 }
 
@@ -23,33 +24,39 @@ export type ObstacleProperties = {
     type: ObstacleType
 }
 
+export type LightProperties = {
+    x: number,
+    y: number,
+    z: number,
+    color: [number, number, number]
+}
+
 const GameScene: React.FC<GameSceneState> = ({
     gridProperties,
-    obstacles
+    obstacles,
+    light
 }) => {
     const view = useInvertedMatrix(0, 0, 5.65);
     const projection = usePerspectiveMatrix(22, 1, 1, 1000);
     const renderScene = useRender();
+    const colorBlue = useVector3(0,.5,.9);
 
-    const colorRed = useVector3(1,.8,.8);
-    const p = useVector3(-1,5,2);
-    const p2 = useVector3(-9, 3, 9);
-    const colorCounterRed = useVector3(.8,1,1);
-    const p3 = useVector3(1.5,-3,6);
+    usePointLight(light.color, [light.x, light.y, light.z]);
+    usePointLight(colorBlue, [-light.x, -light.y*3, light.z/2]);
 
-    usePointLight(colorRed, p);
-    // usePointLight(colorRed, p2);
-    usePointLight(colorCounterRed, p3);
-    renderScene();
     useEffect(() => {
         renderScene();
     },[gridProperties]);
 
-    // console.log(obstacles);
+    const obstaclesToRender = useMemo(
+        () => obstacles.map(o => buildObstacleRenderProperties(o, gridProperties)),
+        [...obstacles.flatMap(o => [o.column, o.row, o.type])]
+    );
+
     return (<camera view={view} projection={projection}>
-        {obstacles.map((o, i) => {
-            return <Obstacle key={i} {...buildObstacleRenderProperties(o,gridProperties)}></Obstacle>
-        })}
+        {obstaclesToRender.map((o, i) => (
+            <Obstacle key={i} {...o}></Obstacle>
+        ))}
         <Grid {...gridProperties}></Grid>
     </camera>);
 }
@@ -61,15 +68,15 @@ function  buildObstacleRenderProperties(
     obstacle: ObstacleProperties,
     grid: GridProperties)
 : ObstacleRenderingProperties {
-    const cellWidth = 2/grid.columnsCount;
-    const cellHeight = 2/grid.rowsCount;
-    const x = (obstacle.column + .5) * cellWidth  -1;
-    const y = (obstacle.row + .5) * cellHeight -1 ;
+    const scaleX = 1/grid.columnsCount;
+    const scaleY = 1/grid.rowsCount;
+    const x = (obstacle.column + .5) * scaleX * 2  -1;
+    const y = (obstacle.row + .5) * scaleY * 2 -1 ;
     return  {
         x,
         y,
-        width: cellWidth,
-        height: cellHeight,
+        scaleX,
+        scaleY,
         type: obstacle.type
     }
 }

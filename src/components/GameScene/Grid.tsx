@@ -1,5 +1,5 @@
-import React from 'react';
-import { useBasicSolid } from '@react-vertex/material-hooks';
+import React, {useMemo} from 'react';
+import { useLambertSolid, useBasicSolid } from '@react-vertex/material-hooks';
 import { useGeometryElements} from '@react-vertex/geometry-hooks';
 import {useVector3} from '@react-vertex/math-hooks';
 
@@ -16,11 +16,11 @@ const CLIP_SPACE = {
 }
 
 const Grid: React.FC<any> = (props: GridProperties) => {
-
-    const program = useBasicSolid(props.color);
+    const c = useVector3(...props.color);
+    const program = useBasicSolid(c);
     const position = useVector3(0,0,0);
 
-    const lines = Array(props.columnsCount + 1).fill(0).map((v, i) => {
+    const lines = useMemo(() => Array(props.columnsCount + 1).fill(0).map((v, i) => {
         const x = CLIP_SPACE.from + CLIP_SPACE.size * i/props.columnsCount;
         return [
             [x, CLIP_SPACE.from, 0],
@@ -32,17 +32,16 @@ const Grid: React.FC<any> = (props: GridProperties) => {
             [CLIP_SPACE.from, y, 0],
             [CLIP_SPACE.to, y, 0]
         ];
-    }));
+    })), [props.columnsCount, props.rowsCount]);
 
-    const vertices = lines.flat();
-
-    const indices = vertices.map((v, i) => i);
-    const geometry = useGeometryElements({
-        vertices: vertices.flat(),
-        indices,
-        normals: [],
+    const geometryProps = useMemo(() => ({
+        vertices: lines.flat(2),
+        indices: lines.flat().map((v, i) => i),
+        normals: lines.flat().map(vert => [0, Math.sign(vert[1]), 40]).flat(),
         uvs: []
-    });
+    }), [props.columnsCount, props.rowsCount]);
+
+    const geometry = useGeometryElements(geometryProps);
 
     return (<group>
         <material program={program}>
@@ -51,7 +50,7 @@ const Grid: React.FC<any> = (props: GridProperties) => {
                 {...geometry}
                 drawElements={{
                     mode: 'LINES',
-                    count: indices.length
+                    count: geometryProps.indices.length
                 }}
             > </geometry>
         </material>
