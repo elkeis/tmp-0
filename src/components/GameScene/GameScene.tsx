@@ -9,7 +9,7 @@ import {
     usePointLight
 } from '@react-vertex/core';
 import Grid, {GridProperties} from './Grid';
-import Obstacle, { ObstacleRenderingProperties } from './Obstacle/Obstacle';
+import {ObstaclesGroup, ObstacleRenderingProperties} from './Obstacles';
 import { ObstacleType } from '../../reducer/models/ObstacleType';
 
 export type GameSceneState = {
@@ -54,9 +54,7 @@ const GameScene: React.FC<GameSceneState> = ({
     );
 
     return (<camera view={view} projection={projection}>
-        {obstaclesToRender.map((o, i) => (
-            <Obstacle key={i} {...o}></Obstacle>
-        ))}
+        <ObstaclesGroup obstacles={obstaclesToRender}></ObstaclesGroup>
         <Grid {...gridProperties}></Grid>
     </camera>);
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import {useBasicSolid } from '@react-vertex/material-hooks';
 import { Boulder } from './Boulder';
 import { Gravel } from './Gravel';
 import {WormholeEntrance} from './WormholeEntrance';
@@ -26,10 +27,23 @@ export type ObstacleRenderingProperties = {
     type: ObstacleType
 }
 
-const Obstacle: React.FC<ObstacleRenderingProperties>  = (props) => {
-    const ObstacleToRender = OBSTACLE_COMPONENTS[props.type];
-
-    return <ObstacleToRender {...props}></ObstacleToRender>;
+export type ObstaclesGroupProperties = {
+    obstacles: Array<ObstacleRenderingProperties>
 }
 
-export default Obstacle;
+export const ObstaclesGroup: React.FC<ObstaclesGroupProperties> = ({
+    obstacles
+}) => {
+    const black = useBasicSolid([0,0,0]);
+
+    return (
+        <material program={black}>
+            {
+                obstacles.map(o => {
+                    const ObstacleToRender = OBSTACLE_COMPONENTS[o.type] || null;
+                    return <ObstacleToRender {...o}></ObstacleToRender>;
+                })
+            }
+        </material>
+    )
+}
