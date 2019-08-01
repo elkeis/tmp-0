@@ -21,5 +21,17 @@ export const INITIAL_STATE: AppState = {
             rowsCount: 10,
             color: [1,1,1],
         },
+        route: {
+            start: {
+                row: 0,
+                column: 0
+            },
+            target: {
+                row: 9,
+                column: 9
+            }
+        }
     }
+
+
 }

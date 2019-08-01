@@ -34,9 +34,9 @@ export const ObstaclesGroup: React.FC<ObstaclesGroupProperties> = ({
     return (
         <material program={black}>
             {
-                obstacles.map(o => {
+                obstacles.map((o, i) => {
                     const ObstacleToRender = OBSTACLE_COMPONENTS[o.type] || null;
-                    return <ObstacleToRender {...o}></ObstacleToRender>;
+                    return <ObstacleToRender key={i} {...o}></ObstacleToRender>;
                 })
             }
         </material>
