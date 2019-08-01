@@ -1,3 +1,1 @@
-export type State = {
-
-}
+export * from './initialState';

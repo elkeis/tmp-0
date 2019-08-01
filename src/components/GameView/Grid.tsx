@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import { useLambertSolid, useBasicSolid } from '@react-vertex/material-hooks';
+import {useBasicSolid } from '@react-vertex/material-hooks';
 import { useGeometryElements} from '@react-vertex/geometry-hooks';
 import {useVector3} from '@react-vertex/math-hooks';
 
@@ -39,7 +39,7 @@ const Grid: React.FC<any> = (props: GridProperties) => {
         indices: lines.flat().map((v, i) => i),
         normals: lines.flat().map(vert => [0, Math.sign(vert[1]), 40]).flat(),
         uvs: []
-    }), [props.columnsCount, props.rowsCount]);
+    }), [lines]);
 
     const geometry = useGeometryElements(geometryProps);
 

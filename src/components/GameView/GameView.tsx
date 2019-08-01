@@ -8,7 +8,8 @@ import {
 import {useRender} from '@react-vertex/core';
 
 import Grid, {GridProperties} from './Grid';
-import {ObstaclesGroup, ObstacleRenderingProperties, ObstacleType} from './Obstacles';
+import {ObstaclesGroup, ObstacleRenderingProperties} from './Obstacles';
+import {ObstacleType} from '../../models';
 
 export type GameViewState = {
     gridProperties: GridProperties,
@@ -21,13 +22,6 @@ export type ObstacleProperties = {
     type: ObstacleType
 }
 
-export type LightProperties = {
-    x: number,
-    y: number,
-    z: number,
-    color: [number, number, number]
-}
-
 export const GameView: React.FC<GameViewState> = ({
     gridProperties,
     obstacles
@@ -38,11 +32,15 @@ export const GameView: React.FC<GameViewState> = ({
 
     useEffect(() => {
         renderScene();
-    },[gridProperties]);
+    },[gridProperties, renderScene]);
 
     const obstaclesToRender = useMemo(
         () => obstacles.map(o => buildObstacleRenderProperties(o, gridProperties)),
-        [...obstacles.flatMap(o => [o.column, o.row, o.type])]
+        [
+            ...obstacles.flatMap(o => [o.column, o.row, o.type]),
+            gridProperties.columnsCount,
+            gridProperties.rowsCount
+        ]
     );
 
     return (<camera view={view} projection={projection}>

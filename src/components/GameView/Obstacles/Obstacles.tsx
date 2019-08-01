@@ -5,12 +5,7 @@ import { Gravel } from './Gravel';
 import {WormholeEntrance} from './WormholeEntrance';
 import { WormholeExit } from './WormholeExit';
 
-export enum ObstacleType {
-    BOULDER,
-    GRAVEL,
-    WORMHOLE_ENTRANCE,
-    WORMHOLE_EXIT
-}
+import {ObstacleType} from '../../../models/ObstacleType';
 
 const OBSTACLE_COMPONENTS = {
     [ObstacleType.BOULDER]: Boulder,
