@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import GameScene, { GameSceneState, ObstacleProperties } from './components/GameScene/GameScene';
+import  {GameViewState, ObstacleProperties, GameView} from './components/GameView';
 import './App.scss';
 import {Canvas} from '@react-vertex/core';
 import { ObstacleType } from './reducer/models/ObstacleType';
@@ -16,49 +16,22 @@ const App: React.FC = () => {
     {row: 9, column: 1, type: ObstacleType.WORMHOLE_ENTRANCE},
     {row: 0, column: 9, type: ObstacleType.WORMHOLE_EXIT},
   ];
-  const [s, ss] = useState<GameSceneState>({
+  const [s, ss] = useState<GameViewState>({
     gridProperties: {
       columnsCount: 10,
       rowsCount: 10,
       color: [1,1,1],
     },
-    light: {
-      x: 0,
-      y: 0,
-      z: 6,
-      color: [0.8, 1, 1]
-    },
     obstacles
   });
-
-  const onMouseMove = (e) => {
-    const scaleX = window.innerWidth/400;
-    const scaleY = window.innerHeight/400;
-    const x = ((e.clientX/window.innerWidth) * 2  - 1) * scaleX;
-    const y = -((e.clientY/window.innerHeight) * 2 -1) * scaleY;
-    ss({
-      gridProperties: {
-        columnsCount: 10,
-        rowsCount: 10,
-        color: [1,1,1]
-      },
-      light: {
-        x,
-        y,
-        z: 1,
-        color: [1,1,1]
-      },
-      obstacles
-    });
-  }
 
   return (
     <div className="world camera">
       <div className="scene">
         <div className="screen">
-          <div className="game-pane" onMouseMove={(e) => onMouseMove(e)}>
+          <div className="game-pane">
             <Canvas width={400} height={400} clearColor={[0,0,0,0.1]}>
-              <GameScene {...s}></GameScene>
+              <GameView {...s}></GameView>
             </Canvas>
           </div>
 

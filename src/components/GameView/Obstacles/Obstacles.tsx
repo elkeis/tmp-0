@@ -5,7 +5,7 @@ import { Gravel } from './Gravel';
 import {WormholeEntrance} from './WormholeEntrance';
 import { WormholeExit } from './WormholeExit';
 
-enum ObstacleType {
+export enum ObstacleType {
     BOULDER,
     GRAVEL,
     WORMHOLE_ENTRANCE,

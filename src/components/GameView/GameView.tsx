@@ -1,20 +1,17 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
+
 import {
     useInvertedMatrix,
     usePerspectiveMatrix,
-    useVector3,
 } from '@react-vertex/math-hooks';
-import {
-    useRender,
-    usePointLight
-} from '@react-vertex/core';
-import Grid, {GridProperties} from './Grid';
-import {ObstaclesGroup, ObstacleRenderingProperties} from './Obstacles';
-import { ObstacleType } from '../../reducer/models/ObstacleType';
 
-export type GameSceneState = {
+import {useRender} from '@react-vertex/core';
+
+import Grid, {GridProperties} from './Grid';
+import {ObstaclesGroup, ObstacleRenderingProperties, ObstacleType} from './Obstacles';
+
+export type GameViewState = {
     gridProperties: GridProperties,
-    light: LightProperties,
     obstacles: Array<ObstacleProperties>
 }
 
@@ -31,18 +28,13 @@ export type LightProperties = {
     color: [number, number, number]
 }
 
-const GameScene: React.FC<GameSceneState> = ({
+export const GameView: React.FC<GameViewState> = ({
     gridProperties,
-    obstacles,
-    light
+    obstacles
 }) => {
     const view = useInvertedMatrix(0, 0, 5.65);
     const projection = usePerspectiveMatrix(22, 1, 1, 1000);
     const renderScene = useRender();
-    const colorBlue = useVector3(0,.5,.9);
-
-    usePointLight(light.color, [light.x, light.y, light.z]);
-    usePointLight(colorBlue, [-light.x, -light.y*3, light.z/2]);
 
     useEffect(() => {
         renderScene();
@@ -58,8 +50,6 @@ const GameScene: React.FC<GameSceneState> = ({
         <Grid {...gridProperties}></Grid>
     </camera>);
 }
-
-export default GameScene;
 
 
 function  buildObstacleRenderProperties(
