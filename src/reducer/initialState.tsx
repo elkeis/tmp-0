@@ -1,8 +1,36 @@
-import {GameViewState} from '../components/GameView';
 import {ObstacleType} from '../models';
 
-export type AppState = {
+
+export interface GridLocation {
+    row: number,
+    column: number,
+}
+
+export interface AppState {
     gameView: GameViewState,
+}
+
+export interface GameViewState {
+    gridProperties: GridState,
+    obstacles: Array<ObstacleProperties>,
+    route: RouteProperties
+}
+
+export interface GridState {
+    rowsCount: number;
+    columnsCount: number;
+}
+
+export interface RouteProperties {
+    start: GridLocation
+    target: GridLocation
+    path: Array<GridLocation>
+}
+
+export interface ObstacleProperties {
+    row: number,
+    column: number,
+    type: ObstacleType
 }
 
 export const INITIAL_STATE: AppState = {
@@ -19,7 +47,6 @@ export const INITIAL_STATE: AppState = {
         gridProperties: {
             columnsCount: 10,
             rowsCount: 10,
-            color: [1,1,1],
         },
         route: {
             start: {
@@ -43,6 +70,4 @@ export const INITIAL_STATE: AppState = {
             ]
         }
     }
-
-
 }

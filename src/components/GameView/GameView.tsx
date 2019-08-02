@@ -7,35 +7,18 @@ import {
 
 import {useRender} from '@react-vertex/core';
 
-import Grid, {GridProperties} from './Grid';
+import Grid from './Grid';
 import {ObstaclesGroup, ObstacleRenderingProperties} from './Obstacles';
-import {ObstacleType} from '../../models';
 import { Route, RouteRenderingProperties } from './Route/Route';
 import {Location} from './Route/Path';
 
-export type GameViewState = {
-    gridProperties: GridProperties,
-    obstacles: Array<ObstacleProperties>,
-    route: RouteProperties
-}
-
-export type GridLocation = {
-    row: number,
-    column: number,
-}
-
-
-export type RouteProperties = {
-    start: GridLocation
-    target: GridLocation
-    path: Array<GridLocation>
-}
-
-export type ObstacleProperties = {
-    row: number,
-    column: number,
-    type: ObstacleType
-}
+import {
+    GameViewState,
+    GridLocation,
+    GridState,
+    RouteProperties,
+    ObstacleProperties,
+} from '../../reducer';
 
 export const GameView: React.FC<GameViewState> = ({
     gridProperties,
@@ -74,7 +57,7 @@ export const GameView: React.FC<GameViewState> = ({
 
 function buildRouteRenderingProperties(
     route: RouteProperties,
-    grid: GridProperties
+    grid: GridState
 ): RouteRenderingProperties {
 
     const scaleX = 1/grid.columnsCount;
@@ -97,7 +80,7 @@ function buildRouteRenderingProperties(
 
 function convertGridLocationToRenderingLocation(
     gridLocation: GridLocation,
-    gridProperties: GridProperties
+    gridProperties: GridState
 ): Location {
     const scaleX = 1/gridProperties.columnsCount;
     const scaleY = 1/gridProperties.rowsCount;
@@ -110,7 +93,7 @@ function convertGridLocationToRenderingLocation(
 
 function  buildObstacleRenderProperties(
     obstacle: ObstacleProperties,
-    grid: GridProperties)
+    grid: GridState)
 : ObstacleRenderingProperties {
     const scaleX = 1/grid.columnsCount;
     const scaleY = 1/grid.rowsCount;
