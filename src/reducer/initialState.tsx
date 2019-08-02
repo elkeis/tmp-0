@@ -29,7 +29,18 @@ export const INITIAL_STATE: AppState = {
             target: {
                 row: 9,
                 column: 9
-            }
+            },
+            path: [
+                {row: 0, column: 0},
+                {row: 0, column: 1},
+                {row: 1, column: 1},
+                {row: 1, column: 2},
+                {row: 2, column: 2},
+                {row: 3, column: 2},
+                {row: 3, column: 3},
+                {row: 3, column: 4},
+                {row: 4, column: 4},
+            ]
         }
     }
 
