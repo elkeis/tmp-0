@@ -21,7 +21,6 @@ export const TargetLocation:React.FC<LocationRenderingProperties> = ({
     const middleCircle = useGeometryElements(MIDDLE_CIRCLE_GEOMETRY);
     const smallCircle = useGeometryElements(SMALL_CIRCLE_GEOMETRY);
 
-    console.log(WIDE_CIRCLE_GEOMETRY);
     return (
         <group>
             <geometry position={position} scale={scale} {...wideCircle} drawElements={{

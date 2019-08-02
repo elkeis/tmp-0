@@ -1,6 +1,7 @@
 import React from 'react';
 import {useBasicSolid } from '@react-vertex/material-hooks';
 import {LocationRenderingProperties, TargetLocation} from './TargetLocation';
+import { StartingLocation } from './StartingLocation';
 
 
 export type RouteRenderingProperties = {
@@ -19,6 +20,7 @@ export const Route: React.FC<RouteRenderingProperties> = ({
     return (
         <material program={white}>
             <TargetLocation {...target}></TargetLocation>
+            <StartingLocation {...start}></StartingLocation>
         </material>
     )
 }
