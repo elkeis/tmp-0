@@ -12,16 +12,10 @@ import {ObstaclesGroup, ObstacleRenderingProperties} from './Obstacles';
 import { Route, RouteRenderingProperties } from './Route/Route';
 import {Location} from './Route/Path';
 
-import {
-    GameViewState,
-    GridLocation,
-    GridState,
-    RouteProperties,
-    ObstacleProperties,
-} from '../../reducer';
+import * as t from '../../reducer/types';
 
-export const GameView: React.FC<GameViewState> = ({
-    gridProperties,
+export const Game: React.FC<t.Game> = ({
+    grid,
     obstacles,
     route
 }) => {
@@ -31,33 +25,32 @@ export const GameView: React.FC<GameViewState> = ({
 
     useEffect(() => {
         renderScene();
-    },[gridProperties, renderScene]);
+    },[grid, renderScene]);
 
     const obstaclesToRender = useMemo(
-        () => obstacles.map(o => buildObstacleRenderProperties(o, gridProperties)),
+        () => obstacles.map(o => buildObstacleRenderProperties(o, grid)),
         [
             ...obstacles.flatMap(o => [o.column, o.row, o.type]),
-            gridProperties.columnsCount,
-            gridProperties.rowsCount
+            grid.columnsCount,
+            grid.rowsCount
         ]
     );
 
     const routeRenderingProperties = useMemo(
-        () => buildRouteRenderingProperties(route, gridProperties),
-        [route, gridProperties]
+        () => buildRouteRenderingProperties(route, grid),
+        [route, grid]
     );
 
     return (<camera view={view} projection={projection}>
         <Route {...routeRenderingProperties}></Route>
         <ObstaclesGroup obstacles={obstaclesToRender}></ObstaclesGroup>
-        <Grid {...gridProperties}></Grid>
+        <Grid {...grid}></Grid>
     </camera>);
 }
 
-
 function buildRouteRenderingProperties(
-    route: RouteProperties,
-    grid: GridState
+    route: t.Route,
+    grid: t.Grid
 ): RouteRenderingProperties {
 
     const scaleX = 1/grid.columnsCount;
@@ -79,21 +72,21 @@ function buildRouteRenderingProperties(
 }
 
 function convertGridLocationToRenderingLocation(
-    gridLocation: GridLocation,
-    gridProperties: GridState
+    position: t.Position,
+    grid: t.Grid
 ): Location {
-    const scaleX = 1/gridProperties.columnsCount;
-    const scaleY = 1/gridProperties.rowsCount;
+    const scaleX = 1/grid.columnsCount;
+    const scaleY = 1/grid.rowsCount;
 
     return {
-        x: (gridLocation.column + .5) * scaleX * 2  -1,
-        y: (gridLocation.row + .5) * scaleY * 2 -1,
+        x: (position.column + .5) * scaleX * 2  -1,
+        y: (position.row + .5) * scaleY * 2 -1,
     }
 }
 
 function  buildObstacleRenderProperties(
-    obstacle: ObstacleProperties,
-    grid: GridState)
+    obstacle: t.Obstacle,
+    grid: t.Grid)
 : ObstacleRenderingProperties {
     const scaleX = 1/grid.columnsCount;
     const scaleY = 1/grid.rowsCount;

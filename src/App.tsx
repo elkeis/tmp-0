@@ -1,5 +1,5 @@
 import React from 'react';
-import  {GameView} from './components/GameView';
+import  {Game} from './components/Game';
 import './App.scss';
 import {Canvas} from '@react-vertex/core';
 import {INITIAL_STATE} from './reducer';
@@ -13,7 +13,7 @@ const App: React.FC = () => {
         <div className="screen">
           <div className="game-pane">
             <Canvas width={400} height={400} clearColor={[0,0,0,0.1]}>
-              <GameView {...INITIAL_STATE.gameView}></GameView>
+              <Game {...INITIAL_STATE.game}></Game>
             </Canvas>
           </div>
 
