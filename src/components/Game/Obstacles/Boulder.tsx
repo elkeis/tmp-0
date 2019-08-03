@@ -2,15 +2,13 @@ import React from 'react';
 
 import { useGeometryElements} from '@react-vertex/geometry-hooks';
 import {useVector3} from '@react-vertex/math-hooks';
-import { ObstacleRenderingProperties } from './Obstacles';
 import { BOULDER_GEOMETRY } from './geometry';
+import * as Type from '../types';
 
-export const Boulder:React.FC<ObstacleRenderingProperties> = ({
-    x,y,scaleX,scaleY
-}) => {
+export const Boulder:React.FC<Type.RenderObject> = props => {
+    const position = useVector3(props.x, props.y, 0);
+    const scale = [props.scaleX, props.scaleY, props.scaleY];
 
-    const position = useVector3(x,y,0);
-    const scale = [scaleX, scaleY, scaleY];
     const stoneGeometry = useGeometryElements(BOULDER_GEOMETRY);
 
     return (

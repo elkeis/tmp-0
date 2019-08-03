@@ -2,21 +2,12 @@ import React from 'react';
 
 import { useGeometryElements} from '@react-vertex/geometry-hooks';
 import {useVector3} from '@react-vertex/math-hooks';
+import * as Type from '../types';
 
+export const TargetLocation:React.FC<Type.RenderObject> = props => {
+    const position = useVector3(props.x, props.y, 0);
+    const scale = [props.scaleX, props.scaleY, props.scaleY];
 
-export type LocationRenderingProperties = {
-    x: number,
-    y: number,
-    scaleX: number,
-    scaleY: number
-}
-
-
-export const TargetLocation:React.FC<LocationRenderingProperties> = ({
-    x,y,scaleX,scaleY
-}) => {
-    const position = useVector3(x,y,0);
-    const scale = [scaleX, scaleY, scaleY];
     const wideCircle = useGeometryElements(WIDE_CIRCLE_GEOMETRY);
     const middleCircle = useGeometryElements(MIDDLE_CIRCLE_GEOMETRY);
     const smallCircle = useGeometryElements(SMALL_CIRCLE_GEOMETRY);

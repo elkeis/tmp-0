@@ -8,86 +8,72 @@ import {
 import {useRender} from '@react-vertex/core';
 
 import Grid from './Grid';
-import {ObstaclesGroup, ObstacleRenderingProperties} from './Obstacles';
-import { Route, RouteRenderingProperties } from './Route/Route';
-import {Location} from './Route/Path';
+import {ObstaclesGroup} from './Obstacles';
+import { Route } from './Route/Route';
 
-import * as t from '../../reducer/types';
+import * as StateType from '../../reducer/types';
+import * as Type from './types';
 
-export const Game: React.FC<t.Game> = ({
-    grid,
-    obstacles,
-    route
-}) => {
+export const Game: React.FC<StateType.Game> = props => {
     const view = useInvertedMatrix(0, 0, 5.65);
     const projection = usePerspectiveMatrix(22, 1, 1, 1000);
     const renderScene = useRender();
 
     useEffect(() => {
         renderScene();
-    },[grid, renderScene]);
+    },[props.grid, renderScene]);
 
     const obstaclesToRender = useMemo(
-        () => obstacles.map(o => buildObstacleRenderProperties(o, grid)),
+        () => props.obstacles.map(o => buildObstacleRenderObject(o, props.grid)),
         [
-            ...obstacles.flatMap(o => [o.column, o.row, o.type]),
-            grid.columnsCount,
-            grid.rowsCount
+            ...props.obstacles.flatMap(o => [o.column, o.row, o.type]),
+            props.grid.columnsCount,
+            props.grid.rowsCount
         ]
     );
 
-    const routeRenderingProperties = useMemo(
-        () => buildRouteRenderingProperties(route, grid),
-        [route, grid]
+    const routeToRender = useMemo(
+        () => buildRouteRenderObject(props.route, props.grid),
+        [props.route, props.grid]
     );
 
     return (<camera view={view} projection={projection}>
-        <Route {...routeRenderingProperties}></Route>
+        <Route {...routeToRender}></Route>
         <ObstaclesGroup obstacles={obstaclesToRender}></ObstaclesGroup>
-        <Grid {...grid}></Grid>
+        <Grid {...props.grid}></Grid>
     </camera>);
 }
 
-function buildRouteRenderingProperties(
-    route: t.Route,
-    grid: t.Grid
-): RouteRenderingProperties {
-
-    const scaleX = 1/grid.columnsCount;
-    const scaleY = 1/grid.rowsCount;
-
+function buildRouteRenderObject(
+    route: StateType.Route,
+    grid: StateType.Grid
+): Type.Route {
     return {
-        start: {
-            ...convertGridLocationToRenderingLocation(route.start, grid),
-            scaleX,
-            scaleY
-        },
-        target: {
-            ...convertGridLocationToRenderingLocation(route.target, grid),
-            scaleX,
-            scaleY
-        },
-        path: route.path.map(l => convertGridLocationToRenderingLocation(l, grid))
+        start: convertPositionToRenderObject(route.start, grid),
+        target: convertPositionToRenderObject(route.target, grid),
+        locations: route.path.map(l => convertPositionToRenderObject(l, grid))
     }
 }
 
-function convertGridLocationToRenderingLocation(
-    position: t.Position,
-    grid: t.Grid
-): Location {
+function convertPositionToRenderObject(
+    position: StateType.Position,
+    grid: StateType.Grid
+): Type.RenderObject {
     const scaleX = 1/grid.columnsCount;
     const scaleY = 1/grid.rowsCount;
 
     return {
         x: (position.column + .5) * scaleX * 2  -1,
         y: (position.row + .5) * scaleY * 2 -1,
+        scaleX,
+        scaleY
     }
 }
 
-function  buildObstacleRenderProperties(
-    obstacle: t.Obstacle,
-    grid: t.Grid)
-: ObstacleRenderingProperties {
+function  buildObstacleRenderObject(
+    obstacle: StateType.Obstacle,
+    grid: StateType.Grid)
+: Type.Obstacle {
     const scaleX = 1/grid.columnsCount;
     const scaleY = 1/grid.rowsCount;
     const x = (obstacle.column + .5) * scaleX * 2  -1;

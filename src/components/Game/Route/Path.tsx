@@ -1,23 +1,11 @@
 import React, { useMemo } from 'react';
 import { useGeometryElements} from '@react-vertex/geometry-hooks';
 import {useVector3} from '@react-vertex/math-hooks';
+import * as Type from '../types';
 
-
-export type Location = {
-    x: number,
-    y: number,
-}
-
-export type PathRenderingProperties = {
-    locations: Array<Location>
-}
-
-
-export const Path: React.FC<PathRenderingProperties> = ({
-    locations
-}) => {
+export const Path: React.FC<Type.Locations> = props => {
     const position = useVector3(0,0,0);
-    const pathGeometryData = useMemo( () => buildPathGeometry(locations), [locations]);
+    const pathGeometryData = useMemo( () => buildPathGeometry(props.locations), [props.locations]);
     const pathGeometry = useGeometryElements(pathGeometryData);
 
     return (

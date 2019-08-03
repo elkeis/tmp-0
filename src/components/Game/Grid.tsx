@@ -2,8 +2,7 @@ import React, {useMemo} from 'react';
 import {useBasicSolid } from '@react-vertex/material-hooks';
 import { useGeometryElements} from '@react-vertex/geometry-hooks';
 import {useVector3} from '@react-vertex/math-hooks';
-
-import * as t from '../../reducer/types';
+import * as Type from '../../reducer/types';
 
 const CLIP_SPACE = {
     from: -1,
@@ -11,7 +10,7 @@ const CLIP_SPACE = {
     size: 2
 }
 
-const Grid: React.FC<any> = (props: t.Grid) => {
+const Grid: React.FC<Type.Grid> = props => {
     const c = useVector3([0,0,0]);
     const program = useBasicSolid(c);
     const position = useVector3(0,0,0);

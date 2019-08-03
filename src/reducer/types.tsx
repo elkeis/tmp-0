@@ -1,12 +1,12 @@
 import {ObstacleType} from '../models';
 
+export interface State {
+    game: Game,
+}
+
 export interface Position {
     row: number,
     column: number,
-}
-
-export interface State {
-    game: Game,
 }
 
 export interface Game {

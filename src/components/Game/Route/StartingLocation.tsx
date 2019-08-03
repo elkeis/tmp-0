@@ -2,19 +2,11 @@ import React from 'react';
 
 import { useGeometryElements} from '@react-vertex/geometry-hooks';
 import {useVector3} from '@react-vertex/math-hooks';
+import * as Type from '../types';
 
-export type LocationRenderingProperties = {
-    x: number,
-    y: number,
-    scaleX: number,
-    scaleY: number
-}
-
-export const StartingLocation:React.FC<LocationRenderingProperties> = ({
-    x,y,scaleX,scaleY
-}) => {
-    const position = useVector3(x,y,0);
-    const scale = [scaleX, scaleY, scaleY];
+export const StartingLocation:React.FC<Type.RenderObject> = props => {
+    const position = useVector3(props.x, props.y, 0);
+    const scale = [props.scaleX, props.scaleY, props.scaleY];
     const startingLocationSign = useGeometryElements(STARTING_LOCATION_SIGN_GEOMETRY);
 
     return (
