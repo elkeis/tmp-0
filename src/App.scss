@@ -222,7 +222,11 @@
   @include s-stack();
   @include m-glass();
   @include e-comics-outline();
-  @include e-flying();
+  // @include e-flying();
+
+  .canvas {
+    position: absolute;
+  }
 }
 
 .controls-pane {

@@ -1,0 +1,17 @@
+.grid-container {
+    position: relative;
+    width: 400px;
+    height: 400px;
+    top: 0;
+    left: 0;
+    display: grid;
+    grid-auto-rows: 10%;
+    grid-auto-columns: 10%;
+
+    .grid-item {
+        &:hover {
+            opacity: .5;
+            background: white;
+        }
+    }
+}

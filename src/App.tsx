@@ -1,20 +1,30 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import  {Game} from './components/Game';
 import './App.scss';
+import * as Interface from './reducer/types';
 import {Canvas} from '@react-vertex/core';
-import {INITIAL_STATE} from './reducer';
+import {INITIAL_STATE, reducer, addBoulder, removeObstacle} from './reducer';
+import { ControlGrid } from './components/Controls/ControlGrid';
 
 
 const App: React.FC = () => {
-
+  const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
+  const gridClickHandler = (p:Interface.Position) => {
+    console.log(`add boulder at ${p.row} ${p.column}`);
+    dispatch(removeObstacle(p));
+    dispatch(addBoulder(p));
+  }
   return (
     <div className="world camera">
       <div className="scene">
         <div className="screen">
           <div className="game-pane">
-            <Canvas width={400} height={400} clearColor={[0,0,0,0.1]}>
-              <Game {...INITIAL_STATE.game}></Game>
-            </Canvas>
+            <div className="canvas">
+              <Canvas width={400} height={400} clearColor={[0,0,0,0.1]}>
+                <Game {...state}></Game>
+              </Canvas>
+            </div>
+            <ControlGrid {...state.grid} onClick={p => gridClickHandler(p)}></ControlGrid>
           </div>
 
           <div className="controls-pane">

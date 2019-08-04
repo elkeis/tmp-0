@@ -14,14 +14,14 @@ import { Route } from './Route/Route';
 import * as StateType from '../../reducer/types';
 import * as Type from './types';
 
-export const Game: React.FC<StateType.Game> = props => {
-    const view = useInvertedMatrix(0, 0, 5.65);
+export const Game: React.FC<StateType.State> = props => {
+    const view = useInvertedMatrix(0, 0, 5.15);
     const projection = usePerspectiveMatrix(22, 1, 1, 1000);
     const renderScene = useRender();
 
     useEffect(() => {
         renderScene();
-    },[props.grid, renderScene]);
+    },[props.grid, props.obstacles, renderScene]);
 
     const obstaclesToRender = useMemo(
         () => props.obstacles.map(o => buildObstacleRenderObject(o, props.grid)),
@@ -64,7 +64,7 @@ function convertPositionToRenderObject(
 
     return {
         x: (position.column + .5) * scaleX * 2  -1,
-        y: (position.row + .5) * scaleY * 2 -1,
+        y: -((position.row + .5) * scaleY * 2 -1),
         scaleX,
         scaleY
     }
@@ -77,7 +77,7 @@ function  buildObstacleRenderObject(
     const scaleX = 1/grid.columnsCount;
     const scaleY = 1/grid.rowsCount;
     const x = (obstacle.column + .5) * scaleX * 2  -1;
-    const y = (obstacle.row + .5) * scaleY * 2 -1 ;
+    const y = -((obstacle.row + .5) * scaleY * 2 -1) ;
     return  {
         x,
         y,
