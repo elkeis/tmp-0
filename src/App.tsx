@@ -2,34 +2,78 @@ import React, { useReducer } from 'react';
 import  {Game} from './components/Game';
 import './App.scss';
 import * as Interface from './reducer/types';
+import {GridActionTypeKeys} from './reducer/types';
 import {Canvas} from '@react-vertex/core';
-import {INITIAL_STATE, reducer, addBoulder, removeObstacle} from './reducer';
+import {INITIAL_STATE, reducer, createGridAction, createToggleGridControlAction} from './reducer';
 import { GridControl } from './components/Controls/GridControl/GridControl';
+import {Switch} from './components/Controls/Switch/Switch';
 
 
 const App: React.FC = () => {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
   const gridClickHandler = (p:Interface.Position) => {
-    console.log(`add boulder at ${p.row} ${p.column}`);
-    dispatch(removeObstacle(p));
-    dispatch(addBoulder(p));
+    if (state.gridControlAction ) {
+      dispatch(createGridAction(Interface.GridActionTypeKeys.REMOVE_OBSTACLE, p));
+      dispatch(createGridAction(state.gridControlAction, p));
+    }
   }
+
+  const toggleGridControlAction = (key: Interface.GridActionTypeKeys, isOn) => {
+    console.log(`dispatch, ${isOn}, ${createToggleGridControlAction(key)}`);
+    if (isOn) {
+      dispatch(createToggleGridControlAction(key));
+    } else {
+      dispatch(createToggleGridControlAction(undefined));
+    }
+  }
+
   return (
     <div className="world camera">
       <div className="scene">
         <div className="screen">
           <div className="game-pane">
             <div className="canvas">
-              <Canvas width={400} height={400} clearColor={[0,0,0,0.1]}>
+              <Canvas width={500} height={500} clearColor={[0,0,0,0.1]}>
                 <Game {...state}></Game>
               </Canvas>
             </div>
-            <GridControl {...state.grid} width={400} height={400} onClick={p => gridClickHandler(p)}></GridControl>
+            <GridControl {...state.grid} width={500} height={500} onClick={p => gridClickHandler(p)}></GridControl>
           </div>
 
           <div className="controls-pane">
             <div className="with-geometry fill-parent">
-              Hi this is controls for the game
+              Please fill the game with stuff:
+
+              <Switch
+                isOn={state.gridControlAction === GridActionTypeKeys.ADD_BOULDER}
+                onToggle={isOn => toggleGridControlAction(GridActionTypeKeys.ADD_BOULDER, isOn)}>
+                Boulder
+              </Switch>
+              <Switch
+                isOn={state.gridControlAction === GridActionTypeKeys.ADD_GRAVEL}
+                onToggle={isOn => toggleGridControlAction(GridActionTypeKeys.ADD_GRAVEL, isOn)}>
+                Gravel
+              </Switch>
+              <Switch
+                isOn={state.gridControlAction === GridActionTypeKeys.ADD_WORMHOLE_ENTRANCE}
+                onToggle={isOn => toggleGridControlAction(GridActionTypeKeys.ADD_WORMHOLE_ENTRANCE, isOn)}>
+                Wormhole Ent.
+              </Switch>
+              <Switch
+                isOn={state.gridControlAction === GridActionTypeKeys.ADD_WORMHOLE_EXIT}
+                onToggle={isOn => toggleGridControlAction(GridActionTypeKeys.ADD_WORMHOLE_EXIT, isOn)}>
+                Wormhole Ex.
+              </Switch>
+              <Switch
+                isOn={state.gridControlAction === GridActionTypeKeys.ADD_START_LOCATION}
+                onToggle={isOn => toggleGridControlAction(GridActionTypeKeys.ADD_START_LOCATION, isOn)}>
+                Start
+              </Switch>
+              <Switch
+                isOn={state.gridControlAction === GridActionTypeKeys.ADD_TARGET_LOCATION}
+                onToggle={isOn => toggleGridControlAction(GridActionTypeKeys.ADD_TARGET_LOCATION, isOn)}>
+                Target
+              </Switch>
             </div>
 
             <div className="with-structure shelf">

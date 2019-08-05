@@ -8,7 +8,8 @@ export interface Position {
 export interface State {
     grid: Grid,
     obstacles: Array<Obstacle>,
-    route: Route
+    route: Route,
+    gridControlAction?: GridActionTypeKeys,
 }
 
 export interface Grid {
@@ -32,34 +33,34 @@ export interface GridControl extends Grid {
     onClick: (position: Position) => void
 }
 
+export interface Switch {
+    isOn: boolean,
+    onToggle: (isOn: boolean) => void
+}
+
 
 export enum ActionTypeKeys {
-    ADD_BOULDER,
-    ADD_GRAVEL,
-    ADD_WORMHOLE_ENTRANCE,
-    ADD_WORMHOLE_EXIT,
-    REMOVE_OBSTACLE,
-
-    ADD_START_LOCATION,
-    ADD_TARGET_LOCATION,
-
-    OPEN_OBSTACLES_SCREEN,
-    OPEN_ROUTE_SCREEN,
+    TOGGLE_GRID_CONTROL_ACTION = 'TOGGLE_GRID_CONTROL_ACTION'
 }
 
-export interface Action {
-    type: ActionTypeKeys
+export enum GridActionTypeKeys {
+    ADD_BOULDER = 'ADD_BOULDER',
+    ADD_GRAVEL = 'ADD_GRAVEL',
+    ADD_WORMHOLE_ENTRANCE = 'ADD_WORMHOLE_ENTRANCE',
+    ADD_WORMHOLE_EXIT = 'ADD_WORMHOLE_EXIT',
+    REMOVE_OBSTACLE = 'REMOVE_OBSTACLE',
+
+    ADD_START_LOCATION = 'ADD_START_LOCATION',
+    ADD_TARGET_LOCATION = 'ADD_TARGET_LOCATION',
 }
 
-export interface GridAction extends Action {
-    type: typeof
-        ActionTypeKeys.ADD_BOULDER |
-        ActionTypeKeys.ADD_GRAVEL |
-        ActionTypeKeys.ADD_WORMHOLE_ENTRANCE |
-        ActionTypeKeys.ADD_WORMHOLE_EXIT |
-        ActionTypeKeys.REMOVE_OBSTACLE |
-        ActionTypeKeys.ADD_START_LOCATION |
-        ActionTypeKeys.ADD_TARGET_LOCATION;
+export interface GridAction {
+    type: GridActionTypeKeys,
     column: number,
     row: number
+}
+
+export interface AppAction {
+    type: ActionTypeKeys,
+    data: any
 }

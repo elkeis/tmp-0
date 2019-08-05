@@ -34,7 +34,8 @@ export const INITIAL_STATE: t.State = {
             {row: 3, column: 4},
             {row: 4, column: 4},
         ]
-    }
+    },
+    gridControlAction: t.GridActionTypeKeys.ADD_BOULDER
 }
 
 export enum ScreenType  {

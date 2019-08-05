@@ -22,7 +22,7 @@ export const GridControl:React.FC<Interface.GridControl> = props => {
                             gridColumn: j+1
                         }}></div>
                     })
-                }), [props.rowsCount, props.columnsCount])
+                }), [props.rowsCount, props.columnsCount, props.onClick])
             }
         </div>
     )

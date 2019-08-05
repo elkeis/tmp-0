@@ -1,10 +1,11 @@
 import * as Interface from './types';
-import {ActionTypeKeys} from './types';
+import {GridActionTypeKeys} from './types';
 import {INITIAL_STATE} from './initialState';
 import { ObstacleType } from '../models';
-export const reducer = (state: Interface.State = INITIAL_STATE , action: Interface.GridAction): Interface.State => {
+export const reducer = (state: Interface.State = INITIAL_STATE , action: Interface.GridAction | Interface.AppAction): Interface.State => {
+    console.log(action);
     switch (action.type) {
-        case ActionTypeKeys.ADD_BOULDER: {
+        case GridActionTypeKeys.ADD_BOULDER: {
             return {
                 ...state,
                 obstacles: [...state.obstacles, {
@@ -13,7 +14,7 @@ export const reducer = (state: Interface.State = INITIAL_STATE , action: Interfa
                     column: action.column
                 }]
             }
-        } case ActionTypeKeys.ADD_GRAVEL : {
+        } case GridActionTypeKeys.ADD_GRAVEL : {
             return {
                 ...state,
                 obstacles: [...state.obstacles, {
@@ -22,7 +23,7 @@ export const reducer = (state: Interface.State = INITIAL_STATE , action: Interfa
                     column: action.column
                 }]
             }
-        } case ActionTypeKeys.ADD_WORMHOLE_ENTRANCE : {
+        } case GridActionTypeKeys.ADD_WORMHOLE_ENTRANCE : {
             return {
                     ...state,
                 obstacles: [...state.obstacles, {
@@ -32,7 +33,7 @@ export const reducer = (state: Interface.State = INITIAL_STATE , action: Interfa
                 }]
             }
 
-        } case ActionTypeKeys.ADD_WORMHOLE_EXIT : {
+        } case GridActionTypeKeys.ADD_WORMHOLE_EXIT : {
             return {
                 ...state,
                 obstacles: [...state.obstacles, {
@@ -42,14 +43,14 @@ export const reducer = (state: Interface.State = INITIAL_STATE , action: Interfa
                 }]
             }
 
-        } case ActionTypeKeys.REMOVE_OBSTACLE : {
+        } case GridActionTypeKeys.REMOVE_OBSTACLE : {
             return {
                 ...state,
                 obstacles: [...state.obstacles.filter(o => {
                     return o.row !== action.row || o.column !== action.column
                 })]
             }
-        } case ActionTypeKeys.ADD_START_LOCATION : {
+        } case GridActionTypeKeys.ADD_START_LOCATION : {
             return {
                 ...state,
                 route: {
@@ -60,7 +61,7 @@ export const reducer = (state: Interface.State = INITIAL_STATE , action: Interfa
                     }
                 }
             }
-        } case ActionTypeKeys.ADD_TARGET_LOCATION : {
+        } case GridActionTypeKeys.ADD_TARGET_LOCATION : {
             return {
                 ...state,
                 route: {
@@ -70,6 +71,12 @@ export const reducer = (state: Interface.State = INITIAL_STATE , action: Interfa
                         column: action.column
                     }
                 }
+            }
+        } case Interface.ActionTypeKeys.TOGGLE_GRID_CONTROL_ACTION: {
+            console.log('toggle');
+            return {
+                ...state,
+                gridControlAction: action.data
             }
         }
     }
