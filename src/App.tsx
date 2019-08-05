@@ -4,11 +4,21 @@ import './App.scss';
 import * as Interface from './reducer/interface';
 import {GridActionTypeKeys} from './reducer/interface';
 import {Canvas} from '@react-vertex/core';
-import {INITIAL_STATE, reducer, createGridAction, createToggleGridControlAction, updatePath} from './reducer';
+import {INITIAL_STATE, reducer, createGridAction, toggleGridControlAction, updatePath} from './reducer';
 import { GridControl } from './components/Controls/GridControl/GridControl';
 import {Switch} from './components/Controls/Switch/Switch';
 import {solve} from './services/solver';
 
+
+const GRID_EDITOR_NAMES = {
+  [GridActionTypeKeys.ADD_BOULDER]: 'Boulder',
+  [GridActionTypeKeys.ADD_GRAVEL]: 'Gravel',
+  [GridActionTypeKeys.ADD_START_LOCATION]: 'Start',
+  [GridActionTypeKeys.ADD_TARGET_LOCATION]: 'Target',
+  [GridActionTypeKeys.ADD_WORMHOLE_ENTRANCE]: 'Wormhole Ent.',
+  [GridActionTypeKeys.ADD_WORMHOLE_EXIT]: 'Wormhole Exit',
+  [GridActionTypeKeys.REMOVE_OBSTACLE]: 'Clear'
+}
 
 const App: React.FC = () => {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
@@ -20,19 +30,19 @@ const App: React.FC = () => {
     }
   }
 
+
+  const toggleGridEditor = (key: Interface.GridActionTypeKeys, isOn) => {
+    if (isOn) {
+      dispatch(toggleGridControlAction(key));
+    } else {
+      dispatch(toggleGridControlAction(undefined));
+    }
+  }
+
   useEffect(() => {
     const path = solve(state);
     dispatch(updatePath(path));
   }, [state]);
-
-  const toggleGridControlAction = (key: Interface.GridActionTypeKeys, isOn) => {
-    console.log(`dispatch, ${isOn}, ${createToggleGridControlAction(key)}`);
-    if (isOn) {
-      dispatch(createToggleGridControlAction(key));
-    } else {
-      dispatch(createToggleGridControlAction(undefined));
-    }
-  }
 
   return (
     <div className="world camera">
@@ -49,48 +59,20 @@ const App: React.FC = () => {
 
           <div className="controls-pane">
             <div className="with-geometry fill-parent">
-              Please fill the game with stuff:
-
-              <Switch
-                isOn={state.gridControlAction === GridActionTypeKeys.ADD_BOULDER}
-                onToggle={isOn => toggleGridControlAction(GridActionTypeKeys.ADD_BOULDER, isOn)}>
-                Boulder
-              </Switch>
-              <Switch
-                isOn={state.gridControlAction === GridActionTypeKeys.ADD_GRAVEL}
-                onToggle={isOn => toggleGridControlAction(GridActionTypeKeys.ADD_GRAVEL, isOn)}>
-                Gravel
-              </Switch>
-              <Switch
-                isOn={state.gridControlAction === GridActionTypeKeys.ADD_WORMHOLE_ENTRANCE}
-                onToggle={isOn => toggleGridControlAction(GridActionTypeKeys.ADD_WORMHOLE_ENTRANCE, isOn)}>
-                Wormhole Ent.
-              </Switch>
-              <Switch
-                isOn={state.gridControlAction === GridActionTypeKeys.ADD_WORMHOLE_EXIT}
-                onToggle={isOn => toggleGridControlAction(GridActionTypeKeys.ADD_WORMHOLE_EXIT, isOn)}>
-                Wormhole Ex.
-              </Switch>
-              <Switch
-                isOn={state.gridControlAction === GridActionTypeKeys.ADD_START_LOCATION}
-                onToggle={isOn => toggleGridControlAction(GridActionTypeKeys.ADD_START_LOCATION, isOn)}>
-                Start
-              </Switch>
-              <Switch
-                isOn={state.gridControlAction === GridActionTypeKeys.ADD_TARGET_LOCATION}
-                onToggle={isOn => toggleGridControlAction(GridActionTypeKeys.ADD_TARGET_LOCATION, isOn)}>
-                Target
-              </Switch>
-              <Switch
-                isOn={state.gridControlAction === GridActionTypeKeys.REMOVE_OBSTACLE}
-                onToggle={isOn => toggleGridControlAction(GridActionTypeKeys.REMOVE_OBSTACLE, isOn)}>
-                Remove
-              </Switch>
+              Please fill the field using:
+              {
+                Object.values(GridActionTypeKeys).map(key => (
+                  <Switch
+                    isOn={state.gridControlAction === key}
+                    onToggle={isOn => toggleGridEditor(key, isOn)}>
+                    { GRID_EDITOR_NAMES[key] }
+                  </Switch>
+                ))
+              }
             </div>
 
             <div className="with-structure shelf">
-              <button className="button _cancel"></button>
-              <button className="button _ok"></button>
+              <button className="button">clear</button>
             </div>
           </div>
         </div>

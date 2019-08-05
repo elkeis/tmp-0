@@ -58,7 +58,6 @@
 }
 
 .game-pane {
-  @include g-box(100%, 100%);
   @include s-stack();
   @include m-glass();
   @include e-comics-outline();

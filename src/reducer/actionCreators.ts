@@ -5,7 +5,7 @@ export const createGridAction = (key: Interface.GridActionTypeKeys, position: In
     ...position
 });
 
-export const createToggleGridControlAction = (gridControlActionKey: Interface.GridActionTypeKeys) => ({
+export const toggleGridControlAction = (gridControlActionKey: Interface.GridActionTypeKeys) => ({
     type: Interface.ActionTypeKeys.TOGGLE_GRID_CONTROL_ACTION,
     data: gridControlActionKey
 });
