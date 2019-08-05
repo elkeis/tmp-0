@@ -4,12 +4,13 @@ import {ObstacleType} from '../models/ObstacleType';
 
 
 const buildPath = (targetNode, path = []) => {
-    path.unshift(targetNode.position);
     if (targetNode.previousNode) {
+        path.unshift(targetNode.position);
         return buildPath(targetNode.previousNode, path);
-    } else {
-        return path;
+    } else if (path.length > 0) {
+        path.unshift(targetNode.position);
     }
+    return path;
 }
 
 

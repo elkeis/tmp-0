@@ -62,9 +62,26 @@
   @include m-glass();
   @include e-comics-outline();
 
+  .not-found {
+    z-index: 7;
+    position: absolute;
+    top: 50%;
+    background: black;
+    width: 400px;
+    height: 45px;
+    @include s-zero-gravity();
+
+    transform: translateY(-2000px) rotate3d(.4, .2, .0, 5deg);
+    &.show {
+      transition: transform .5s;
+      transform: translateY(-50%) rotate3d(.4, .2, .0, 5deg);
+    }
+  }
+
   .canvas {
     position: absolute;
   }
+
 }
 
 .controls-pane {

@@ -44,7 +44,8 @@ export interface Switch {
 
 export enum ActionTypeKeys {
     TOGGLE_GRID_CONTROL_ACTION = 'TOGGLE_GRID_CONTROL_ACTION',
-    UPDATE_PATH = 'UPDATE_PATH'
+    UPDATE_PATH = 'UPDATE_PATH',
+    CLEAR_ALL_OBSTACLES = 'CLEAR_ALL_OBSTACLES'
 }
 
 export enum GridActionTypeKeys {
@@ -66,5 +67,5 @@ export interface GridAction {
 
 export interface AppAction {
     type: ActionTypeKeys,
-    data: any
+    data?: any
 }

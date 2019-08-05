@@ -4,7 +4,7 @@ import './App.scss';
 import * as Interface from './reducer/interface';
 import {GridActionTypeKeys} from './reducer/interface';
 import {Canvas} from '@react-vertex/core';
-import {INITIAL_STATE, reducer, createGridAction, toggleGridControlAction, updatePath} from './reducer';
+import {INITIAL_STATE, reducer, createGridAction, toggleGridControlAction, updatePath, clearAll} from './reducer';
 import { GridControl } from './components/Controls/GridControl/GridControl';
 import {Switch} from './components/Controls/Switch/Switch';
 import {solve} from './services/solver';
@@ -30,13 +30,16 @@ const App: React.FC = () => {
     }
   }
 
-
-  const toggleGridEditor = (key: Interface.GridActionTypeKeys, isOn) => {
+  const toggleGridAction = (key: Interface.GridActionTypeKeys, isOn) => {
     if (isOn) {
       dispatch(toggleGridControlAction(key));
     } else {
       dispatch(toggleGridControlAction(undefined));
     }
+  }
+
+  const clear = () => {
+    dispatch(clearAll());
   }
 
   const grid = state.grid;
@@ -53,6 +56,7 @@ const App: React.FC = () => {
       <div className="scene">
         <div className="screen">
           <div className="game-pane">
+            <div className={'not-found ' + (state.route.path.length === 0 ? 'show' : 'hide') }>route was not found</div>
             <div className="canvas">
               <Canvas width={500} height={500} clearColor={[0,0,0,0.1]}>
                 <Game {...state}></Game>
@@ -68,7 +72,7 @@ const App: React.FC = () => {
                 Object.values(GridActionTypeKeys).map(key => (
                   <Switch
                     isOn={state.gridControlAction === key}
-                    onToggle={isOn => toggleGridEditor(key, isOn)}>
+                    onToggle={isOn => toggleGridAction(key, isOn)}>
                     { GRID_EDITOR_NAMES[key] }
                   </Switch>
                 ))
@@ -76,7 +80,7 @@ const App: React.FC = () => {
             </div>
 
             <div className="with-structure shelf">
-              <button className="button">clear</button>
+              <button className="button" onClick={() => clear()}>clear</button>
             </div>
           </div>
         </div>

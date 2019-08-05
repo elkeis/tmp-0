@@ -84,6 +84,11 @@ export const reducer = (state: Interface.State = INITIAL_STATE , action: Interfa
                     path: action.data
                 }
             }
+        } case Interface.ActionTypeKeys.CLEAR_ALL_OBSTACLES : {
+            return {
+                ...state,
+                obstacles: []
+            }
         }
     }
 }
