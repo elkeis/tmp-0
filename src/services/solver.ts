@@ -1,4 +1,4 @@
-import * as Interface from '../reducer/types';
+import * as Interface from '../reducer/interface';
 import {ObstacleType} from '../models/ObstacleType';
 
 

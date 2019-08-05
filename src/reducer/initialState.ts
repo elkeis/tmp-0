@@ -1,4 +1,4 @@
-import * as t from './types';
+import * as t from './interface';
 export const INITIAL_STATE: t.State = {
     obstacles: [ ],
     grid: {

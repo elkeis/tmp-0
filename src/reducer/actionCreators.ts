@@ -1,4 +1,4 @@
-import * as Interface from './types';
+import * as Interface from './interface';
 
 export const createGridAction = (key: Interface.GridActionTypeKeys, position: Interface.Position) => ({
     type: key,

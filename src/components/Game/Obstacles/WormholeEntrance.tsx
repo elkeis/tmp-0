@@ -3,7 +3,7 @@ import React from 'react';
 import { useGeometryElements} from '@react-vertex/geometry-hooks';
 import {useVector3} from '@react-vertex/math-hooks';
 import { SQUARE_OUTLINE_GEOMETRY, BLACK_HOLE_GEOMETRY } from './geometry';
-import * as Type from '../types';
+import * as Type from '../interface';
 
 export const WormholeEntrance:React.FC<Type.RenderObject> = props => {
 

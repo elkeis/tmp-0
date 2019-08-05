@@ -4,7 +4,7 @@ import { Boulder } from './Boulder';
 import { Gravel } from './Gravel';
 import {WormholeEntrance} from './WormholeEntrance';
 import { WormholeExit } from './WormholeExit';
-import * as Type from '../types';
+import * as Type from '../interface';
 
 import {ObstacleType} from '../../../models/ObstacleType';
 

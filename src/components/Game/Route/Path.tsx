@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useGeometryElements} from '@react-vertex/geometry-hooks';
 import {useVector3} from '@react-vertex/math-hooks';
-import * as Type from '../types';
+import * as Type from '../interface';
 
 export const Path: React.FC<Type.Locations> = props => {
     const position = useVector3(0,0,0);

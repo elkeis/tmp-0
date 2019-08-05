@@ -1,8 +1,8 @@
 import React, { useReducer, useEffect } from 'react';
 import  {Game} from './components/Game';
 import './App.scss';
-import * as Interface from './reducer/types';
-import {GridActionTypeKeys} from './reducer/types';
+import * as Interface from './reducer/interface';
+import {GridActionTypeKeys} from './reducer/interface';
 import {Canvas} from '@react-vertex/core';
 import {INITIAL_STATE, reducer, createGridAction, createToggleGridControlAction, updatePath} from './reducer';
 import { GridControl } from './components/Controls/GridControl/GridControl';

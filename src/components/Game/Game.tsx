@@ -11,8 +11,8 @@ import Grid from './Grid';
 import {ObstaclesGroup} from './Obstacles';
 import { Route } from './Route/Route';
 
-import * as StateType from '../../reducer/types';
-import * as Type from './types';
+import * as StateType from '../../reducer/interface';
+import * as Type from './interface';
 
 export const Game: React.FC<StateType.State> = props => {
     const view = useInvertedMatrix(0, 0, 5.15);

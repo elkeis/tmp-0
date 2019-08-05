@@ -1,5 +1,5 @@
 import React from 'react';
-import * as Interface from '../../../reducer/types';
+import * as Interface from '../../../reducer/interface';
 import './Switch.scss';
 
 export const Switch:React.FC<Interface.Switch> = props => {

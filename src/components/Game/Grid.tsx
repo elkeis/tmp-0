@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import {useBasicSolid } from '@react-vertex/material-hooks';
 import { useGeometryElements} from '@react-vertex/geometry-hooks';
 import {useVector3} from '@react-vertex/math-hooks';
-import * as Type from '../../reducer/types';
+import * as Type from '../../reducer/interface';
 
 const CLIP_SPACE = {
     from: -1,

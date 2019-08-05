@@ -1,5 +1,5 @@
-import * as Interface from './types';
-import {GridActionTypeKeys} from './types';
+import * as Interface from './interface';
+import {GridActionTypeKeys} from './interface';
 import {INITIAL_STATE} from './initialState';
 import { ObstacleType } from '../models';
 export const reducer = (state: Interface.State = INITIAL_STATE , action: Interface.GridAction | Interface.AppAction): Interface.State => {

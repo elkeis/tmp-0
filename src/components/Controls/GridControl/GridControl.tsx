@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import * as Interface from '../../../reducer/types';
+import * as Interface from '../../../reducer/interface';
 import './GridControl.scss';
 
 export const GridControl:React.FC<Interface.GridControl> = ({

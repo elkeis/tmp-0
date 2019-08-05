@@ -3,7 +3,7 @@ import {useBasicSolid } from '@react-vertex/material-hooks';
 import {TargetLocation} from './TargetLocation';
 import { StartingLocation } from './StartingLocation';
 import { Path} from './Path';
-import * as Type from '../types';
+import * as Type from '../interface';
 
 export const Route: React.FC<Type.Route> = props => {
     const white = useBasicSolid([.8,1,1]);
