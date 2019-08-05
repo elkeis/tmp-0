@@ -5,7 +5,7 @@ import * as Type from '../types';
 
 export const Path: React.FC<Type.Locations> = props => {
     const position = useVector3(0,0,0);
-    const pathGeometryData = useMemo( () => buildPathGeometry(props.locations), [props.locations]);
+    const pathGeometryData = buildPathGeometry(props.locations);
     const pathGeometry = useGeometryElements(pathGeometryData);
 
     return (

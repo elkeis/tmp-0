@@ -50,7 +50,7 @@ const buildCircleGeometry = (radius = 1, segments = 14) => {
     }
 }
 
-const WIDE_CIRCLE_GEOMETRY = buildCircleGeometry(.9, 16);
-const MIDDLE_CIRCLE_GEOMETRY = buildCircleGeometry(.6, 13);
-const SMALL_CIRCLE_GEOMETRY = buildCircleGeometry(.3, 9);
+const WIDE_CIRCLE_GEOMETRY = buildCircleGeometry(.9, 25);
+const MIDDLE_CIRCLE_GEOMETRY = buildCircleGeometry(.6, 19);
+const SMALL_CIRCLE_GEOMETRY = buildCircleGeometry(.3, 15);
 

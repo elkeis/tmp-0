@@ -3,7 +3,6 @@ import {GridActionTypeKeys} from './types';
 import {INITIAL_STATE} from './initialState';
 import { ObstacleType } from '../models';
 export const reducer = (state: Interface.State = INITIAL_STATE , action: Interface.GridAction | Interface.AppAction): Interface.State => {
-    console.log(action);
     switch (action.type) {
         case GridActionTypeKeys.ADD_BOULDER: {
             return {
@@ -73,10 +72,17 @@ export const reducer = (state: Interface.State = INITIAL_STATE , action: Interfa
                 }
             }
         } case Interface.ActionTypeKeys.TOGGLE_GRID_CONTROL_ACTION: {
-            console.log('toggle');
             return {
                 ...state,
                 gridControlAction: action.data
+            }
+        } case Interface.ActionTypeKeys.UPDATE_PATH : {
+            return {
+                ...state,
+                route: {
+                    ...state.route,
+                    path: action.data
+                }
             }
         }
     }

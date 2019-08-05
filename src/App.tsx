@@ -1,22 +1,29 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import  {Game} from './components/Game';
 import './App.scss';
 import * as Interface from './reducer/types';
 import {GridActionTypeKeys} from './reducer/types';
 import {Canvas} from '@react-vertex/core';
-import {INITIAL_STATE, reducer, createGridAction, createToggleGridControlAction} from './reducer';
+import {INITIAL_STATE, reducer, createGridAction, createToggleGridControlAction, updatePath} from './reducer';
 import { GridControl } from './components/Controls/GridControl/GridControl';
 import {Switch} from './components/Controls/Switch/Switch';
+import {solve} from './services/solver';
 
 
 const App: React.FC = () => {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
+
   const gridClickHandler = (p:Interface.Position) => {
     if (state.gridControlAction ) {
       dispatch(createGridAction(Interface.GridActionTypeKeys.REMOVE_OBSTACLE, p));
       dispatch(createGridAction(state.gridControlAction, p));
     }
   }
+
+  useEffect(() => {
+    const path = solve(state);
+    dispatch(updatePath(path));
+  }, [state.obstacles, state.route.start, state.route.target]);
 
   const toggleGridControlAction = (key: Interface.GridActionTypeKeys, isOn) => {
     console.log(`dispatch, ${isOn}, ${createToggleGridControlAction(key)}`);
@@ -73,6 +80,11 @@ const App: React.FC = () => {
                 isOn={state.gridControlAction === GridActionTypeKeys.ADD_TARGET_LOCATION}
                 onToggle={isOn => toggleGridControlAction(GridActionTypeKeys.ADD_TARGET_LOCATION, isOn)}>
                 Target
+              </Switch>
+              <Switch
+                isOn={state.gridControlAction === GridActionTypeKeys.REMOVE_OBSTACLE}
+                onToggle={isOn => toggleGridControlAction(GridActionTypeKeys.REMOVE_OBSTACLE, isOn)}>
+                Remove
               </Switch>
             </div>
 

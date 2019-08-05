@@ -6,7 +6,7 @@ import { Path} from './Path';
 import * as Type from '../types';
 
 export const Route: React.FC<Type.Route> = props => {
-    const white = useBasicSolid([1,1,1]);
+    const white = useBasicSolid([.8,1,1]);
     return (
         <material program={white}>
             <Path locations={props.locations}></Path>
