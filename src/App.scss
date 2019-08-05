@@ -15,7 +15,6 @@
 }
 
 // MATERIALS
-
 @mixin m-night {
   background: #b5d1ff;
   background: linear-gradient(#29133a, #2e89a6);
@@ -132,7 +131,7 @@
   }
 }
 
-@mixin  s-zero-gravity {
+@mixin s-zero-gravity {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -262,7 +261,6 @@
 
 
 .App {
-
   div, button {
     outline: none;
     border: none;

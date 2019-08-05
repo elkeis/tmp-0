@@ -4,7 +4,7 @@ import './App.scss';
 import * as Interface from './reducer/types';
 import {Canvas} from '@react-vertex/core';
 import {INITIAL_STATE, reducer, addBoulder, removeObstacle} from './reducer';
-import { ControlGrid } from './components/Controls/ControlGrid';
+import { GridControl } from './components/Controls/GridControl/GridControl';
 
 
 const App: React.FC = () => {
@@ -24,11 +24,10 @@ const App: React.FC = () => {
                 <Game {...state}></Game>
               </Canvas>
             </div>
-            <ControlGrid {...state.grid} onClick={p => gridClickHandler(p)}></ControlGrid>
+            <GridControl {...state.grid} width={400} height={400} onClick={p => gridClickHandler(p)}></GridControl>
           </div>
 
           <div className="controls-pane">
-
             <div className="with-geometry fill-parent">
               Hi this is controls for the game
             </div>

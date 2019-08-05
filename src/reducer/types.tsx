@@ -1,9 +1,5 @@
 import {ObstacleType} from '../models';
 
-// export interface State {
-//     game: Game,
-// }
-
 export interface Position {
     row: number,
     column: number,
@@ -31,6 +27,8 @@ export interface Obstacle extends Position {
 }
 
 export interface GridControl extends Grid {
+    width: number,
+    height: number,
     onClick: (position: Position) => void
 }
 

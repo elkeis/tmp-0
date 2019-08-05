@@ -1,0 +1,11 @@
+.grid-control {
+    z-index: 1;
+    .grid-item {
+        background: white;
+        transition: opacity .1s;
+        opacity: 0;
+        &:hover {
+            opacity: .3;
+        }
+    }
+}
