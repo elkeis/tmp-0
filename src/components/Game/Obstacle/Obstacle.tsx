@@ -15,17 +15,12 @@ const OBSTACLE_COMPONENTS = {
     [ObstacleType.WORMHOLE_EXIT]: WormholeExit
 }
 
-export const ObstaclesGroup: React.FC<Type.Obstacles> = props => {
+export const Obstacle: React.FC<Type.Obstacle> = props => {
     const black = useBasicSolid([0,0,0]);
-
+    const ObstacleToRender = OBSTACLE_COMPONENTS[props.type] || null;
     return (
         <material program={black}>
-            {
-                props.obstacles.map((o, i) => {
-                    const ObstacleToRender = OBSTACLE_COMPONENTS[o.type] || null;
-                    return <ObstacleToRender key={i} {...o}></ObstacleToRender>;
-                })
-            }
+            <ObstacleToRender {...props}></ObstacleToRender>
         </material>
-    )
+    );
 }

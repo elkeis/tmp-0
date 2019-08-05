@@ -6,7 +6,7 @@ import { BOULDER_GEOMETRY } from './geometry';
 import * as Type from '../interface';
 
 export const Boulder:React.FC<Type.RenderObject> = props => {
-    const position = useVector3(props.x, props.y, 0);
+    const position = useVector3(props.x, props.y, props.z);
     const scale = [props.scaleX, props.scaleY, props.scaleY];
 
     const stoneGeometry = useGeometryElements(BOULDER_GEOMETRY);

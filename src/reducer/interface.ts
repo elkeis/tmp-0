@@ -17,10 +17,13 @@ export interface Grid {
     columnsCount: number;
 }
 
-export interface Route {
+export interface Path {
+    path: Array<Position>
+}
+
+export interface Route extends Path{
     start: Position
     target: Position
-    path: Array<Position>
 }
 
 export interface Obstacle extends Position {

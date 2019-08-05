@@ -6,7 +6,7 @@ import { SQUARE_OUTLINE_GEOMETRY, WORMHOLE_EXIT_GEOMETRY } from './geometry';
 import * as Type from '../interface';
 
 export const WormholeExit:React.FC<Type.RenderObject> = props => {
-    const position = useVector3(props.x, props.y, 0);
+    const position = useVector3(props.x, props.y, props.z);
     const scale = [props.scaleX, props.scaleY, props.scaleY];
 
     const outlineGeometry = useGeometryElements(SQUARE_OUTLINE_GEOMETRY);

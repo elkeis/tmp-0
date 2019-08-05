@@ -6,7 +6,7 @@ import { GRAVEL_GEOMETRY } from './geometry';
 import * as Type from '../interface';
 
 export const Gravel:React.FC<Type.RenderObject> = props => {
-    const position = useVector3(props.x, props.y, 0);
+    const position = useVector3(props.x, props.y, props.z);
     const scale = [props.scaleX, props.scaleY, props.scaleY];
     const gravelGeometry = useGeometryElements(GRAVEL_GEOMETRY);
 

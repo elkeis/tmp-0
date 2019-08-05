@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 
 import {
     useInvertedMatrix,
@@ -6,76 +6,48 @@ import {
 } from '@react-vertex/math-hooks';
 
 import {useRender} from '@react-vertex/core';
-
 import Grid from './Grid';
-import {ObstaclesGroup} from './Obstacles';
-import { Route } from './Route/Route';
 
 import * as StateType from '../../reducer/interface';
-import * as Type from './interface';
+import {useBasicSolid } from '@react-vertex/material-hooks';
+import { RenderObjectFactory } from './RenderObjectFactory';
+import { Obstacle } from './Obstacle';
+import { LocationsFactory } from './LocationsFactory';
+import { Path } from './Route/Path';
+import { StartingLocation } from './Route/StartingLocation';
+import { TargetLocation } from './Route/TargetLocation';
 
 export const Game: React.FC<StateType.State> = props => {
     const view = useInvertedMatrix(0, 0, 5.15);
     const projection = usePerspectiveMatrix(22, 1, 1, 1000);
     const renderScene = useRender();
 
+    const pathColor = useBasicSolid([.8,1,1]);
+
     useEffect(() => {
         renderScene();
     });
 
-    const obstaclesToRender = useMemo(
-        () => props.obstacles.map(o => buildObstacleRenderObject(o, props.grid)),
-        [ props.obstacles, props.grid]
-    );
-
-    const routeToRender = useMemo(() => buildRouteRenderObject(props.route, props.grid), [props.route, props.grid]);
-
     return (<camera view={view} projection={projection}>
-        <Route {...routeToRender}></Route>
-        <ObstaclesGroup obstacles={obstaclesToRender}></ObstaclesGroup>
+        {
+            props.obstacles.map((o, i) => (
+            <RenderObjectFactory key={i} {...o} {...props.grid} render={renderObject => (
+                <Obstacle {...renderObject} type={o.type}></Obstacle>
+            )} ></RenderObjectFactory>))
+        }
+
+        <material program={pathColor}>
+            <LocationsFactory {...props.route} {...props.grid} render={locationsObject => (
+                <Path {...locationsObject}></Path>
+            )}></LocationsFactory>
+            <RenderObjectFactory {...props.route.start} {...props.grid} render={renderObject => (
+                <StartingLocation {...renderObject}></StartingLocation>
+            )}></RenderObjectFactory>
+            <RenderObjectFactory {...props.route.target} {...props.grid} render={renderObject => (
+                <TargetLocation {...renderObject}></TargetLocation>
+            )}></RenderObjectFactory>
+        </material>
+
         <Grid {...props.grid}></Grid>
     </camera>);
-}
-
-function buildRouteRenderObject(
-    route: StateType.Route,
-    grid: StateType.Grid
-): Type.Route {
-    return {
-        start: convertPositionToRenderObject(route.start, grid),
-        target: convertPositionToRenderObject(route.target, grid),
-        locations: route.path.map(l => convertPositionToRenderObject(l, grid))
-    }
-}
-
-function convertPositionToRenderObject(
-    position: StateType.Position,
-    grid: StateType.Grid
-): Type.RenderObject {
-    const scaleX = 1/grid.columnsCount;
-    const scaleY = 1/grid.rowsCount;
-
-    return {
-        x: (position.column + .5) * scaleX * 2  -1,
-        y: -((position.row + .5) * scaleY * 2 -1),
-        scaleX,
-        scaleY
-    }
-}
-
-function  buildObstacleRenderObject(
-    obstacle: StateType.Obstacle,
-    grid: StateType.Grid)
-: Type.Obstacle {
-    const scaleX = 1/grid.columnsCount;
-    const scaleY = 1/grid.rowsCount;
-    const x = (obstacle.column + .5) * scaleX * 2  -1;
-    const y = -((obstacle.row + .5) * scaleY * 2 -1) ;
-    return  {
-        x,
-        y,
-        scaleX,
-        scaleY,
-        type: obstacle.type
-    }
 }
