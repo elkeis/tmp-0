@@ -23,7 +23,7 @@ const App: React.FC = () => {
   useEffect(() => {
     const path = solve(state);
     dispatch(updatePath(path));
-  }, [state.obstacles, state.route.start, state.route.target]);
+  }, [state]);
 
   const toggleGridControlAction = (key: Interface.GridActionTypeKeys, isOn) => {
     console.log(`dispatch, ${isOn}, ${createToggleGridControlAction(key)}`);

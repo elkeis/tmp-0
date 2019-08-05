@@ -58,26 +58,23 @@ export const solve = (
         );
     }
 
-    const isWormholeEntrance = (
-        node: Node,
-    ) => {
+    const isWormholeEntrance = (node: Node) => {
         return containsObstacle(node.position, ObstacleType.WORMHOLE_ENTRANCE);
     }
 
-    const addSiblings = (
-        node: Node,
-    ) => {
+    const addSiblings = (node: Node) => {
         const possiblePositions = [
             {row: node.position.row+1, column: node.position.column },
             {row: node.position.row, column: node.position.column+1 },
             {row: node.position.row-1, column: node.position.column },
             {row: node.position.row, column: node.position.column-1 },
         ].filter(p => isValidPosition(p));
+
         if (isWormholeEntrance(node)) {
             const wormholeExits = obstacles.filter(o => o.type === ObstacleType.WORMHOLE_EXIT);
-            console.log(wormholeExits);
             possiblePositions.push(...wormholeExits);
         }
+
         possiblePositions.forEach(p => {
             let siblingNode:Node = nodes[p.row][p.column];
             if (!siblingNode) {

@@ -25,14 +25,10 @@ export const Game: React.FC<StateType.State> = props => {
 
     const obstaclesToRender = useMemo(
         () => props.obstacles.map(o => buildObstacleRenderObject(o, props.grid)),
-        [
-            ...props.obstacles.flatMap(o => [o.column, o.row, o.type]),
-            props.grid.columnsCount,
-            props.grid.rowsCount
-        ]
+        [ props.obstacles, props.grid]
     );
 
-    const routeToRender = buildRouteRenderObject(props.route, props.grid);
+    const routeToRender = useMemo(() => buildRouteRenderObject(props.route, props.grid), [props.route, props.grid]);
 
     return (<camera view={view} projection={projection}>
         <Route {...routeToRender}></Route>

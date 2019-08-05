@@ -1,150 +1,4 @@
-@keyframes flying {
-  from {
-    transform: translate3d(0, -6px, 0);
-  } to {
-    transform: translate3d(0, 6px, 0px);
-  }
-}
-
-@keyframes flying-slightly {
-  from {
-    transform: translate3d(0, 3px, 0);
-  } to {
-    transform: translate3d(0, -3px, 0px);
-  }
-}
-
-// MATERIALS
-@mixin m-night {
-  background: #b5d1ff;
-  background: linear-gradient(#29133a, #2e89a6);
-}
-
-@mixin m-sunset {
-  background: linear-gradient(#ff6b35, #fad44b);
-}
-
-@mixin m-glass {
-  background: rgba(20, 74, 104, 0.16);
-}
-
-@mixin m-glass-green {
-  background: rgba(10, 77, 1, 0.24);
-}
-
-.with-material {
-  &.night {
-    @include m-night();
-  }
-
-  &.sunset {
-    @include m-sunset();
-  }
-
-  &.glass {
-    @include m-glass();
-    &._green {
-      @include m-glass-green();
-    }
-  }
-}
-
-
-//EFFECTS
-
-@mixin e-light {
-  box-shadow: rgba(31, 171, 209, 0.76) 0px 0px 200px, rgba(255, 255, 255, 0.9) 0px 0px 50px;
-}
-
-@mixin e-comics-outline {
-  border: 1px solid  rgb(6, 22, 31);
-}
-@mixin e-view-angle {
-  transform: rotate3d(.4, .2, .0, 5deg);
-}
-@mixin e-flying {
-  animation: flying 3s  ease-in-out infinite alternate;
-}
-@mixin e-flying-slightly {
-  animation: flying-slightly 3s ease-in-out infinite alternate;
-}
-
-.with-effect {
-
-  &.light {
-    @include e-light();
-  }
-
-  &.comics-outline {
-    @include e-comics-outline();
-  }
-
-  &.view-angle {
-    @include e-view-angle();
-  }
-
-  &.flying {
-    @include e-flying();
-  }
-
-  &.flying-slightly {
-    @include e-flying-slightly();
-  }
-}
-
-// STRUCTURE
-
-@mixin s-stack {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  align-content: stretch;
-
-  padding: 10px;
-  > * {
-    margin-bottom: 10px;
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-}
-
-@mixin s-shelf {
-  display: flex;
-  flex-direction: row;
-  padding: 10px;
-
-  > * {
-    margin-right: 10px;
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-}
-
-@mixin s-shelf-styled {
-  @include s-shelf();
-  padding: 0 10px;
-  & > * {
-    margin-top: -10px;
-    margin-bottom: -10px;
-  }
-}
-
-@mixin s-zero-gravity {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-@mixin s-no-overflow {
-  overflow: hidden;
-}
-
-@mixin s-button {
-  margin-right: 10px;
-  padding: 0px 25px 5px 25px;
-}
+@import './mixins';
 
 .with-structure {
 
@@ -169,23 +23,10 @@
   }
 }
 
-// GEOMETRY
-@mixin g-box($width, $height) {
-  width: $width;
-  height: $height;
-}
 
 .with-geometry {
   &.fill-parent {
-    @include g-box(100%, 100%);
-  }
-}
-
-// BEHAVIOR
-@mixin b-jump-on-active {
-  transition: transform .05s;
-  &:active {
-    transform:  translateY( -3px);
+      @include g-box(100%, 100%);
   }
 }
 
@@ -221,7 +62,6 @@
   @include s-stack();
   @include m-glass();
   @include e-comics-outline();
-  // @include e-flying();
 
   .canvas {
     position: absolute;
@@ -232,7 +72,6 @@
   @include s-stack();
   @include m-glass();
   @include e-comics-outline();
-  // @include e-flying-slightly();
 }
 
 

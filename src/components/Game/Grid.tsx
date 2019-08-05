@@ -11,7 +11,7 @@ const CLIP_SPACE = {
 }
 
 const Grid: React.FC<Type.Grid> = props => {
-    const program = useBasicSolid([1,1,1]);
+    const program = useBasicSolid([1,.8,.8]);
     const position = useVector3(0,0,0);
 
     const lines = useMemo(() => Array(props.columnsCount + 1).fill(0).map((v, i) => {
