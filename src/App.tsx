@@ -39,10 +39,14 @@ const App: React.FC = () => {
     }
   }
 
+  const grid = state.grid;
+  const obstacles = state.obstacles;
+  const start = state.route.start;
+  const target = state.route.target;
   useEffect(() => {
-    const path = solve(state);
+    const path = solve(grid, obstacles, start, target);
     dispatch(updatePath(path));
-  }, [state]);
+  }, [grid, obstacles, start, target]);
 
   return (
     <div className="world camera">

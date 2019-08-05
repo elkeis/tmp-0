@@ -21,7 +21,7 @@ export const Game: React.FC<StateType.State> = props => {
 
     useEffect(() => {
         renderScene();
-    },[props, renderScene]);
+    });
 
     const obstaclesToRender = useMemo(
         () => props.obstacles.map(o => buildObstacleRenderObject(o, props.grid)),

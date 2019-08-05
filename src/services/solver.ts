@@ -14,14 +14,13 @@ const buildPath = (targetNode, path = []) => {
 
 
 export const solve = (
-    state: Interface.State,
+    grid: Interface.Grid,
+    obstacles: Array<Interface.Obstacle>,
+    start: Interface.Position,
+    target: Interface.Position
 ) => {
-    const start = state.route.start;
-    const target = state.route.target;
-    const obstacles = state.obstacles;
-    const grid = state.grid;
-    const nodes:Array<Array<Node>> = Array(state.grid.rowsCount).fill(0).map(v =>
-                                        Array(state.grid.columnsCount).fill(undefined));
+    const nodes:Array<Array<Node>> = Array(grid.rowsCount).fill(0).map(v =>
+                                        Array(grid.columnsCount).fill(undefined));
     const startNode = {
         position: start,
         minimalDistance: 0,
