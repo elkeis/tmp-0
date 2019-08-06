@@ -75,6 +75,11 @@ export const solve = (
             possiblePositions.push(...wormholeExits);
         }
 
+        possiblePositions.sort((a, b) => {
+            return Math.abs(a.row-target.row) + Math.abs(a.column-target.column)
+                - Math.abs(b.row-target.row) - Math.abs(b.column-target.column);
+        });
+
         possiblePositions.forEach(p => {
             let siblingNode:Node = nodes[p.row][p.column];
             if (!siblingNode) {
