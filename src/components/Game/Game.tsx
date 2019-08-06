@@ -40,12 +40,18 @@ export const Game: React.FC<StateType.State> = props => {
             <LocationsFactory {...props.route} {...props.grid} render={locationsObject => (
                 <Path {...locationsObject}></Path>
             )}></LocationsFactory>
-            <RenderObjectFactory {...props.route.start} {...props.grid} render={renderObject => (
-                <StartingLocation {...renderObject}></StartingLocation>
-            )}></RenderObjectFactory>
-            <RenderObjectFactory {...props.route.target} {...props.grid} render={renderObject => (
-                <TargetLocation {...renderObject}></TargetLocation>
-            )}></RenderObjectFactory>
+
+            {
+                props.route.start ? <RenderObjectFactory {...props.route.start} {...props.grid} render={renderObject => (
+                    <StartingLocation {...renderObject}></StartingLocation>
+                )}></RenderObjectFactory> : null
+            }
+            {
+                props.route.target ? <RenderObjectFactory {...props.route.target} {...props.grid} render={renderObject => (
+                    <TargetLocation {...renderObject}></TargetLocation>
+                )}></RenderObjectFactory> : null
+            }
+
         </material>
 
         <Grid {...props.grid}></Grid>

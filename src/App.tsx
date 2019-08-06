@@ -1,10 +1,10 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer } from 'react';
 import  {Game} from './components/Game';
 import './App.scss';
 import * as Interface from './reducer/interface';
 import {GridActionTypeKeys} from './reducer/interface';
 import {Canvas} from '@react-vertex/core';
-import {INITIAL_STATE, reducer, createGridAction, toggleGridControlAction, updatePath, clearAll} from './reducer';
+import {INITIAL_STATE, reducer, createGridAction, toggleGridControlAction, updatePath, clearAll, setSolved} from './reducer';
 import { GridControl } from './components/Controls/GridControl/GridControl';
 import {Switch} from './components/Controls/Switch/Switch';
 import {solve} from './services/solver';
@@ -42,27 +42,36 @@ const App: React.FC = () => {
     dispatch(clearAll());
   }
 
-  const grid = state.grid;
-  const obstacles = state.obstacles;
-  const start = state.route.start;
-  const target = state.route.target;
-  useEffect(() => {
+  const buildRoute = () => {
+    const grid = state.grid;
+    const obstacles = state.obstacles;
+    const start = state.route.start;
+    const target = state.route.target;
     const path = solve(grid, obstacles, start, target);
     dispatch(updatePath(path));
-  }, [grid, obstacles, start, target]);
+    dispatch(setSolved(true));
+  }
+
+  const isSolvable = () => {
+    return !!(state.route.start && state.route.target);
+  }
+
+  const isRouteNotFound = () => {
+    return !!(state.solved && state.route.path.length === 0);
+  }
 
   return (
     <div className="world camera">
       <div className="scene">
         <div className="screen">
           <div className="game-pane">
-            <div className={'not-found ' + (state.route.path.length === 0 ? 'show' : 'hide') }>route was not found</div>
+            <div className={['not-found ', isRouteNotFound() ? 'show' : 'hide'].join(' ')}>route was not found</div>
             <div className="canvas">
               <Canvas width={500} height={500} clearColor={[0,0,0,0.1]}>
                 <Game {...state}></Game>
               </Canvas>
             </div>
-            <GridControl {...state.grid} width={500} height={500} onClick={p => gridClickHandler(p)}></GridControl>
+            <GridControl disabled={state.solved} {...state.grid} width={500} height={500} onClick={p => gridClickHandler(p)}></GridControl>
           </div>
 
           <div className="controls-pane">
@@ -71,6 +80,7 @@ const App: React.FC = () => {
               {
                 Object.values(GridActionTypeKeys).map(key => (
                   <Switch
+                    disabled={state.solved}
                     isOn={state.gridControlAction === key}
                     onToggle={isOn => toggleGridAction(key, isOn)}>
                     { GRID_EDITOR_NAMES[key] }
@@ -81,6 +91,7 @@ const App: React.FC = () => {
 
             <div className="with-structure shelf">
               <button className="button" onClick={() => clear()}>clear</button>
+              <button disabled={!isSolvable() || state.solved } className="button" onClick={() => buildRoute()}>solve</button>
             </div>
           </div>
         </div>

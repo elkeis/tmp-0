@@ -6,15 +6,10 @@ export const INITIAL_STATE: t.State = {
         rowsCount: 10,
     },
     route: {
-        start: {
-            row: 0,
-            column: 0
-        },
-        target: {
-            row: 9,
-            column: 9
-        },
+        start: undefined,
+        target: undefined,
         path: [ ]
     },
-    gridControlAction: undefined
+    gridControlAction: undefined,
+    solved: false
 }

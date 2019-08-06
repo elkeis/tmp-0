@@ -18,5 +18,12 @@ export const updatePath = (path: Array<Interface.Position>) => ({
 
 
 export const clearAll = () => ({
-    type: Interface.ActionTypeKeys.CLEAR_ALL_OBSTACLES
+    type: Interface.ActionTypeKeys.CLEAR_ALL
 });
+
+export const setSolved = (solved: boolean) => ({
+    type: Interface.ActionTypeKeys.SET_SOLVED,
+    data: solved
+});
+
+

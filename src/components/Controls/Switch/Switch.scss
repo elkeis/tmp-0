@@ -2,6 +2,13 @@
 
 .switch-control-component {
     @include s-shelf();
+    &.disabled {
+        opacity: .3;
+
+        .switch-button:active {
+            transform: none;
+        }
+    }
 
     .switch-button {
         @include s-zero-gravity();

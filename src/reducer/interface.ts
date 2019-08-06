@@ -10,6 +10,7 @@ export interface State {
     obstacles: Array<Obstacle>,
     route: Route,
     gridControlAction?: GridActionTypeKeys,
+    solved: boolean
 }
 
 export interface Grid {
@@ -22,8 +23,8 @@ export interface Path {
 }
 
 export interface Route extends Path{
-    start: Position
-    target: Position
+    start?: Position
+    target?: Position
 }
 
 export interface Obstacle extends Position {
@@ -33,19 +34,22 @@ export interface Obstacle extends Position {
 export interface GridControl extends Grid {
     width: number,
     height: number,
-    onClick: (position: Position) => void
+    onClick: (position: Position) => void,
+    disabled: boolean
 }
 
 export interface Switch {
     isOn: boolean,
-    onToggle: (isOn: boolean) => void
+    onToggle: (isOn: boolean) => void,
+    disabled: boolean
 }
 
 
 export enum ActionTypeKeys {
     TOGGLE_GRID_CONTROL_ACTION = 'TOGGLE_GRID_CONTROL_ACTION',
     UPDATE_PATH = 'UPDATE_PATH',
-    CLEAR_ALL_OBSTACLES = 'CLEAR_ALL_OBSTACLES'
+    CLEAR_ALL = 'CLEAR_ALL',
+    SET_SOLVED = 'SET_SOLVED',
 }
 
 export enum GridActionTypeKeys {

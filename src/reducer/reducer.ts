@@ -57,7 +57,8 @@ export const reducer = (state: Interface.State = INITIAL_STATE , action: Interfa
                     start: {
                         row: action.row,
                         column: action.column
-                    }
+                    },
+                    path: []
                 }
             }
         } case GridActionTypeKeys.ADD_TARGET_LOCATION : {
@@ -68,7 +69,8 @@ export const reducer = (state: Interface.State = INITIAL_STATE , action: Interfa
                     target: {
                         row: action.row,
                         column: action.column
-                    }
+                    },
+                    path: []
                 }
             }
         } case Interface.ActionTypeKeys.TOGGLE_GRID_CONTROL_ACTION: {
@@ -84,10 +86,14 @@ export const reducer = (state: Interface.State = INITIAL_STATE , action: Interfa
                     path: action.data
                 }
             }
-        } case Interface.ActionTypeKeys.CLEAR_ALL_OBSTACLES : {
+        } case Interface.ActionTypeKeys.CLEAR_ALL : {
+            return {
+                ...INITIAL_STATE
+            }
+        } case Interface.ActionTypeKeys.SET_SOLVED : {
             return {
                 ...state,
-                obstacles: []
+                solved: action.data
             }
         }
     }

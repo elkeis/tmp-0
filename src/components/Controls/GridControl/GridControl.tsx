@@ -7,7 +7,8 @@ export const GridControl:React.FC<Interface.GridControl> = ({
     columnsCount,
     width,
     height,
-    onClick
+    onClick,
+    disabled
 }) => {
     return (
         <div className="grid-control" style={{
@@ -20,12 +21,16 @@ export const GridControl:React.FC<Interface.GridControl> = ({
             {
                 useMemo(() => Array(rowsCount).fill(0).flatMap((v, i) => {
                     return Array(columnsCount).fill(0).map((v, j) => {
-                        return <div className="grid-item" onClick={() => onClick({row: i, column: j})} style={{
+                        return <div className="grid-item" onClick={() => {
+                            if(!disabled) {
+                                onClick({row: i, column: j})
+                            }
+                        }} style={{
                             gridRow: i+1,
                             gridColumn: j+1
                         }}></div>
                     })
-                }), [rowsCount, columnsCount, onClick])
+                }), [rowsCount, columnsCount, onClick, disabled])
             }
         </div>
     )
