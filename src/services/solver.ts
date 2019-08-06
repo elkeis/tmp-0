@@ -75,11 +75,6 @@ export const solve = (
             possiblePositions.push(...wormholeExits);
         }
 
-        possiblePositions.sort((a, b) => {
-            return Math.abs(a.row-target.row) + Math.abs(a.column-target.column)
-                - Math.abs(b.row-target.row) - Math.abs(b.column-target.column);
-        });
-
         possiblePositions.forEach(p => {
             let siblingNode:Node = nodes[p.row][p.column];
             if (!siblingNode) {
@@ -99,22 +94,44 @@ export const solve = (
         return containsObstacle(node.position, ObstacleType.GRAVEL) ? 2 : 1;
     }
 
+
+    const nodeDistanceMap: Array<Array<Node>> = Array(grid.columnsCount * grid.rowsCount);
+
+    const popNext = () => {
+        const firstEntry = nodeDistanceMap.find(v => v && v.length > 0);
+        if (firstEntry) {
+            return firstEntry.pop();
+        }
+    }
+
+    const put = (distance: number, node: Node) => {
+        const array = nodeDistanceMap[distance];
+        if (array) {
+            array.push(node);
+        } else {
+            nodeDistanceMap[distance] = [node];
+        }
+    }
+
     const solveRecursively = (currentNode:Node, targetNode: Node) => {
-        if (currentNode.minimalDistance > targetNode.minimalDistance) {
-            return;
-        } else if (currentNode === targetNode) {
+        if (currentNode === targetNode) {
             return;
         } else if (currentNode.siblings.length === 0) {
             addSiblings(currentNode);
         }
         const distanceIncrement = getDistanceIncrease(currentNode);
         currentNode.siblings.forEach(s => {
-            if (s.minimalDistance > currentNode.minimalDistance + distanceIncrement) {
-                s.minimalDistance = currentNode.minimalDistance + distanceIncrement
+            const nextDistance = currentNode.minimalDistance + distanceIncrement;
+            if (s.minimalDistance > nextDistance && nextDistance < targetNode.minimalDistance) {
+                s.minimalDistance = nextDistance;
                 s.previousNode = currentNode;
-                solveRecursively(s, targetNode);
+                put(s.minimalDistance, s);
             }
         });
+        const next = popNext();
+        if (next) {
+            solveRecursively(next, targetNode);
+        }
     }
 
     solveRecursively(startNode, targetNode);
